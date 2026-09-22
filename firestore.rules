@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Users Collection
+    match /users/{userId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if false;
+    }
+
+    // Listings Collection
+    match /listings/{listingId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if true;
+
+      // Bids Subcollection under listings
+      match /bids/{bidId} {
+        allow read: if true;
+        allow create, update, delete: if true;
+      }
+    }
+
+    // Jobs Collection
+    match /jobs/{jobId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if false;
+    }
+  }
+}

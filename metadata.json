@@ -1,0 +1,6 @@
+{
+  "name": "CropCronical",
+  "description": "Agricultural waste B2B/B2C marketplace connecting farmers with upcycling bio-industries to trade biomass byproducts and earn carbon credits.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,68 @@
+{
+  "entities": {
+    "User": {
+      "collectionName": "users",
+      "description": "Registered marketplace participants (Farmers, Industrial Buyers, Logistics Drivers)",
+      "fields": {
+        "uid": { "type": "string", "description": "Auth UID" },
+        "fullName": { "type": "string", "description": "User's business or personal name" },
+        "role": { "type": "string", "description": "Role: farmer | buyer | driver" },
+        "location": { "type": "geopoint", "description": "Geographic coordinates" },
+        "carbonCredits": { "type": "number", "description": "Accumulated verified carbon credit balance" },
+        "phone": { "type": "string", "description": "Contact phone number" },
+        "organization": { "type": "string", "description": "Farm name or Company name" }
+      },
+      "required": ["uid", "fullName", "role"]
+    },
+    "Listing": {
+      "collectionName": "listings",
+      "description": "Agricultural byproduct waste batches listed for upcycling",
+      "fields": {
+        "farmerId": { "type": "string", "description": "User UID of the farmer" },
+        "farmerName": { "type": "string", "description": "Name of the listing farmer" },
+        "cropType": { "type": "string", "description": "E.g. Paddy Straw, Sugarcane Bagasse, Corn Stover, Wheat Straw" },
+        "weightTons": { "type": "number", "description": "Estimated weight in metric tons" },
+        "acreage": { "type": "number", "description": "Harvested acreage" },
+        "moisturePercentage": { "type": "number", "description": "Moisture content percentage (e.g. 12%)" },
+        "status": { "type": "string", "description": "Status: open | pending | sold" },
+        "askingPricePerTon": { "type": "number", "description": "Reserve or baseline price in USD/Ton" },
+        "locationName": { "type": "string", "description": "City / Region / District" },
+        "coordinates": { "type": "geopoint", "description": "Lat and Lng" },
+        "createdAt": { "type": "timestamp", "description": "Creation timestamp" },
+        "currentHighestBid": { "type": "number", "description": "Current highest bid amount" },
+        "bidCount": { "type": "number", "description": "Number of placed bids" }
+      },
+      "required": ["farmerId", "cropType", "weightTons", "moisturePercentage", "status"]
+    },
+    "Bid": {
+      "collectionName": "listings/{listingId}/bids",
+      "description": "Bids placed by industrial buyers on a specific crop waste listing",
+      "fields": {
+        "buyerId": { "type": "string", "description": "User UID of the industrial buyer" },
+        "buyerName": { "type": "string", "description": "Company name of the buyer" },
+        "buyerIndustry": { "type": "string", "description": "e.g. Bio-CNG / Biogas Plant, Kraft Paper Mill, Biomass Pelletizer" },
+        "bidAmount": { "type": "number", "description": "Total bid offer amount in USD" },
+        "pricePerTon": { "type": "number", "description": "Calculated price per ton" },
+        "timestamp": { "type": "timestamp", "description": "Bid submission timestamp" },
+        "status": { "type": "string", "description": "pending | accepted | outbid | rejected" }
+      },
+      "required": ["buyerId", "bidAmount", "timestamp"]
+    },
+    "Job": {
+      "collectionName": "jobs",
+      "description": "Logistics and hauling contracts connecting farmers, drivers, and buyer plants",
+      "fields": {
+        "listingId": { "type": "string", "description": "Reference to listings" },
+        "driverId": { "type": "string", "description": "Reference to users (driver)" },
+        "driverName": { "type": "string", "description": "Hauler / Driver Name" },
+        "vehicleNumber": { "type": "string", "description": "Truck license or fleet ID" },
+        "pickupStatus": { "type": "string", "description": "scheduled | in-transit | delivered" },
+        "origin": { "type": "string", "description": "Farm pickup location" },
+        "destination": { "type": "string", "description": "Industrial plant destination" },
+        "weightTons": { "type": "number", "description": "Weight carried" },
+        "estimatedDelivery": { "type": "timestamp", "description": "Estimated drop-off time" }
+      },
+      "required": ["listingId", "driverId", "pickupStatus"]
+    }
+  }
+}
